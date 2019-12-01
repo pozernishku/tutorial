@@ -22,7 +22,7 @@ USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/537.36
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 8
+CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -50,11 +50,15 @@ CONCURRENT_REQUESTS = 8
 #    'tutorial.middlewares.TutorialSpiderMiddleware': 543,
 #}
 
+from get_proxies import save_to_proxies_txt
+save_to_proxies_txt()
+ROTATING_PROXY_LIST_PATH = './proxies.txt'
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
+DOWNLOADER_MIDDLEWARES = {
 #    'tutorial.middlewares.TutorialDownloaderMiddleware': 543,
-#}
+   'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
